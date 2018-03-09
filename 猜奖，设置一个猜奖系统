@@ -4,6 +4,7 @@ import random
 user_number_list=[]
 rand_number=random.randint(0,9)#电脑随机生成的数字
 #print(rand_number)
+#猜九次都猜不着，然后输出没猜到的那个数，第一种猜九次时防止被猜中
 # for i in range(9):
 #     user_number=int(input('输入你猜的数'))
 #     user_number_list.append(user_number)
@@ -15,6 +16,7 @@ rand_number=random.randint(0,9)#电脑随机生成的数字
 #     rand_number=random.randint(0,9)
 #     # print(rand_number)
 # print('正确的答案是%s'%rand_number)
+#第二种，只猜三次看能否中奖
 for i in range(3):
     user_number=int(input("输入你猜的数"))
     if rand_number==user_number:
