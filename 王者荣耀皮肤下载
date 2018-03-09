@@ -1,1 +1,28 @@
 
+#_*_ coding: utf-8 _*_
+#post和get可以爬取一些不好爬取的网页的内容，比如一些需要登录的网页时。
+#下载爬取王者荣耀英雄皮肤
+import urllib,urllib2
+import json#用于形式解码
+import os
+#打开网址，获得解析后的内容
+response=urllib2.urlopen("https://pvp.qq.com/web201605/js/herolist.json")
+hero_json=json.loads(response.read())
+hero_num=len(hero_json)
+
+# hero_name=hero_json[0]['cname']
+# skin_names=hero_json[0]['skin_name'].split('|')
+# skin_num=len(skin_names)
+#创建储存路径，
+save_dir = 'D:\heroskin\\'
+#如果要储存的文件夹不存在则新建
+if not os.path.exists(save_dir):
+    os.mkdir(save_dir)
+
+for i in range(hero_num):#逐个获取英雄的皮肤
+    skin_names=hero_json[i]['skin_name'].split('|')
+    for cnt in range(len(skin_names)):
+        save_file_name=save_dir+str(hero_json[i]['ename'])+'-'+hero_json[i]['cname']+'-'+skin_names[cnt]+'.jpg'#储存单个文件最后的名字
+        skin_url='http://game.gtimg.cn/images/yxzj/img201606/skin/hero-info/'+str(hero_json[i]['ename'])+ '/' +str(hero_json[i]['ename'])+'-bigskin-' + str(cnt+1) +'.jpg'#下载地址
+        if not os.path.exists(save_file_name):#检查文件是否存在，如果存在则跳过下载，作用是为了防止同一个图片被重复下载
+           urllib.urlretrieve(skin_url, save_file_name)#不存在时下载
